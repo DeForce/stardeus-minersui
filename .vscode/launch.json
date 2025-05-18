@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "This is not a Drill!",
+            "request": "launch",
+            "preLaunchTask": "build dll",
+            "type": "clr",
+            // This should point to your Stardeus.exe
+            // Note that Steam will relaunch the game, so if you are planning to use a debugger, you will have
+            // to attach to the game *after* steam has relaunched it
+            "windows": {"type": "clr", "program": "E:/steam-library/steamapps/common/Stardeus/Stardeus.exe"},
+            "linux": {"type":"coreclr", "program": "~/.local/share/Steam/steamapps/common/Stardeus/Stardeus"},
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "internalConsoleOptions":"neverOpen",
+            "stopAtEntry": true
+        },
+
+        { // ignore
+            "name": ".NET Framework Attach",
+            "windows": {"type": "clr"},
+            "linux": {"type":"coreclr"},
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+            "symbolOptions": {
+                "searchPaths": [
+                    ".vscode/obj/Debug/*"
+                ],
+                "searchMicrosoftSymbolServer": false,
+                "searchNuGetOrgSymbolServer": false
+            }
+        }
+    ]
+}
