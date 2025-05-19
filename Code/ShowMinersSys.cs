@@ -9,13 +9,19 @@ using Game.Systems.Planets;
 using System.Reflection;
 using System;
 using Game.Data.Planets;
+using Game.Systems.Copters;
+using Game.UI;
+using Unity.Collections;
 
 namespace ShowMiners.Systems {
     public sealed class ShowMinersSys : GameSystem {
         public const string SysId = "ShowMinersSys";
         public static Harmony Harmony;
         public override string Id => SysId;
+        public string GetName => Id;
         public override bool SkipInSandbox => false;
+        
+        private Dictionary<int, CopterMissionType> CopterMissions = new();
 
         // Reflects
         static readonly FieldInfo PlanetResourcesIdx = AccessTools.Field(typeof(PlanetsSys), "planetResourcesIdx");
@@ -27,6 +33,14 @@ namespace ShowMiners.Systems {
                     "GetAutoMiningRateFor",
                     new[] { typeof(PlanetResource), typeof(bool) }
                 )
+            );        
+        
+        static readonly Action<DetailBlockStarmapWidget> RebuildStarmapMenu =
+            AccessTools.MethodDelegate<Action<DetailBlockStarmapWidget>>(
+                AccessTools.Method(
+                    typeof(DetailBlockStarmapWidget),
+                    "RebuildMenu"
+                )
             );
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -35,11 +49,7 @@ namespace ShowMiners.Systems {
         }
 
         public static ShowMinersSys Instance;
-
         private ShowMinersUI UI;
-
-        // Public so that the UI can use it
-        public int SomeVariable;
 
         [RuntimeInitializeOnLoadMethod]
         static void StaticConstructorOnStartup() {
@@ -55,10 +65,28 @@ namespace ShowMiners.Systems {
         protected override void OnInitialize() {
             Instance = this;
             UI = new ShowMinersUI(this);
+            S.Sig.CopterMissionEnded.AddListener(CopterMissionEnded);
+            S.Sig.CopterMissionStarted.AddListener(CopterMissionStarted);
         }
 
-        public string GetName() {
-            return Id;
+        private void CopterMissionStarted(CopterMissionData mission) {
+            D.Err("Mission Started");
+            CopterMissions.Add(mission.TargetId, mission.MissionType);
+            RebuildMenu();
+        }
+
+        private void CopterMissionEnded(CopterMissionData mission) {
+            D.Err("Mission Ended");
+            CopterMissions.Remove(mission.TargetId);
+            RebuildMenu();
+        }
+
+        public CopterMissionType? GetMissionType(int resourceId) {
+            if (CopterMissions.TryGetValue(resourceId, out var missionType)) {
+                return missionType;
+            }
+
+            return null;
         }
 
         public override void Unload() {
@@ -77,6 +105,10 @@ namespace ShowMiners.Systems {
         // PlanetsSys.planetResourcesIdx is private, so use reflection to get it
         public float GetMiningRate(PlanetResource resource) {
             return GetAutoMiningRateFor(resource, true);
+        }
+
+        public void RebuildMenu() {
+            RebuildStarmapMenu(DetailBlockStarmapWidget.Current);
         }
     }
 }

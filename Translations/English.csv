@@ -1,3 +1,13 @@
 Key,Translation,Version,Comment (context for translators)
 showminers.ui.title,Drill Rigs,,
 showminers.ui.retrieveMiner,Retrieve,,
+showminers.ui.sendMiner,Send,,
+showminers.ui.sentMiner,Rig Sent,,
+showminers.ui.progressMiner,Retrieving,,
+showminers.ui.knownDrills,Placed Drills,,
+showminers.ui.showDrills,Show,,
+showminers.ui.sentCopter,Copter Sent,,
+showminers.ui.inSector,In Sector,,
+showminers.ui.perDay,per Day,,
+showminers.ui.difficulty,MD,,
+
