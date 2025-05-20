@@ -31,6 +31,7 @@ public static class UISpaceObjectPatch {
         if (icon.rectTransform.localPosition.Equals(new Vector3(128f, 128f, 0))) {
             icon.rectTransform.localPosition = new Vector3(128f, 128f, 0);
         }
+        icon.gameObject.SetActive(false);
     }
 
     [HarmonyPostfix]
