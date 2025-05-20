@@ -3,6 +3,6 @@
     "SteamWorkshop" : true,
     "Name" : "This is not a Drill!",
     "Description" : "Shows your drills when on the Star Map",
-    "ModVersion" : "1.0.0",
+    "ModVersion" : "1.1.0",
     "GameVersion" : "0.13.12"
 }
