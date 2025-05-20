@@ -1,9 +1,8 @@
-using HarmonyLib;
 using System.Collections.Generic;
-using Game.Systems;
 using Game.Data;
+using Game.Systems;
+using HarmonyLib;
 using ShowMiners.Systems;
-
 
 [HarmonyPatch(typeof(ScanSys), nameof(ScanSys.AddUIButton))]
 public static class ScanSysAddUIButtonPatch {

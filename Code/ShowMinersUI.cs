@@ -1,22 +1,19 @@
 using System;
-using Game.Constants;
-using Game.Data;
-using ShowMiners.Systems;
-using KL.Utils;
-using ShowMiners.Constants;
-using Game.Data.Planets;
-using Game.Data.Space;
 using System.Collections.Generic;
 using System.Linq;
 using Game;
 using Game.CodeGen;
-using Game.Research;
+using Game.Constants;
+using Game.Data;
+using Game.Data.Planets;
+using Game.Data.Space;
 using Game.Systems.Copters;
 using Game.Systems.Planets;
-using Game.Utils;
 using Game.UI;
 using KL.Collections;
-using Unity.Collections;
+using KL.Utils;
+using ShowMiners.Constants;
+using ShowMiners.Systems;
 
 namespace ShowMiners.UI {
     public sealed class ShowMinersUI : IUIDataProvider, IUIContextMenuProvider {
@@ -39,16 +36,16 @@ namespace ShowMiners.UI {
         private Dictionary<int, UDB> UIItems = new();
 
         public UDB GetUIBlock() {
-            D.Err("Getting ui block");
+            // D.Err("Getting ui block");
             return null;
         }
 
         public void GetUIDetails(List<UDB> res) {
-            D.Err("Getting UI Details");
+            // D.Err("Getting UI Details");
         }
 
         public void ContextActions(List<UDB> res) {
-            D.Err("Context Actions");
+            // D.Err("Context Actions");
 
             header ??= UDB.Create(this, UDBT.DTextRB2Header, IconId.CDrill, TS.Translate(TS.UITitle))
                 .WithRBFunction(S.Sig.HideContextMenu.Send);
@@ -113,9 +110,9 @@ namespace ShowMiners.UI {
 
 
         internal void AddMinersUI(List<UDB> res, int resourceMaxIdx) {
+            // Not researched, not showing
             if (!S.Research.IsUnlocked(DefIdsH.ResearchSpaceTravelMiningAutomation)) {
-                // Not researched, not showing
-                D.Err("NOT RESEARCHED, SKIPPING");
+                // D.Err("NOT RESEARCHED, SKIPPING");
                 return;
             }
 
@@ -167,7 +164,7 @@ namespace ShowMiners.UI {
 
                 var textTint = material.NameT;
                 var resourceString = GetResourceString(resource, textTint, isMined);
-                var buttonType = isMined ? UDBT.DProgressBtn : UDBT.DTextBtn;
+                var buttonType = isMined ? UDBT.IProgressBtnThin : UDBT.ITextBtnThin;
 
                 var resourceItem = UDB.Create(this, buttonType, material.IconId, resourceString)
                     .WithIconTint(material.IconTint)
@@ -198,9 +195,8 @@ namespace ShowMiners.UI {
         }
 
         private string GetButtonText(bool isMined, int resourceId) {
-            D.Err("here");
             var missionType = sys.GetMissionType(resourceId);
-            D.Err("mission type", missionType);
+            // D.Err("mission type", missionType);
             if (missionType is null) {
                 return isMined ? TS.RetrieveMiner : TS.SendMiner;
             }
@@ -216,7 +212,7 @@ namespace ShowMiners.UI {
         }
 
         private void SendDrillRig(SpaceObject starObject, PlanetResource resource) {
-            D.Err("Sending Drill Rig");
+            // D.Err("Sending Drill Rig");
             var uiElement = UIItems.Get(resource.Id, null);
             if (uiElement is null) return;
 

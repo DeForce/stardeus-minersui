@@ -1,17 +1,15 @@
-using System.Collections.Generic;
-using ShowMiners.UI;
-using Game.Data;
-using Game.Systems;
-using KL.Utils;
-using UnityEngine;
-using HarmonyLib;
-using Game.Systems.Planets;
-using System.Reflection;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Game.Data;
 using Game.Data.Planets;
+using Game.Systems;
 using Game.Systems.Copters;
+using Game.Systems.Planets;
 using Game.UI;
-using Unity.Collections;
+using HarmonyLib;
+using ShowMiners.UI;
+using UnityEngine;
 
 namespace ShowMiners.Systems {
     public sealed class ShowMinersSys : GameSystem {
@@ -20,7 +18,7 @@ namespace ShowMiners.Systems {
         public override string Id => SysId;
         public string GetName => Id;
         public override bool SkipInSandbox => false;
-        
+
         private Dictionary<int, CopterMissionType> CopterMissions = new();
 
         // Reflects
@@ -33,8 +31,8 @@ namespace ShowMiners.Systems {
                     "GetAutoMiningRateFor",
                     new[] { typeof(PlanetResource), typeof(bool) }
                 )
-            );        
-        
+            );
+
         static readonly Action<DetailBlockStarmapWidget> RebuildStarmapMenu =
             AccessTools.MethodDelegate<Action<DetailBlockStarmapWidget>>(
                 AccessTools.Method(
@@ -53,7 +51,7 @@ namespace ShowMiners.Systems {
 
         [RuntimeInitializeOnLoadMethod]
         static void StaticConstructorOnStartup() {
-            D.Err("Loaded Harmony");
+            // D.Err("Loaded Harmony");
             LoadHarmony();
         }
 
@@ -70,13 +68,13 @@ namespace ShowMiners.Systems {
         }
 
         private void CopterMissionStarted(CopterMissionData mission) {
-            D.Err("Mission Started");
+            // D.Err("Mission Started");
             CopterMissions.Add(mission.TargetId, mission.MissionType);
             RebuildMenu();
         }
 
         private void CopterMissionEnded(CopterMissionData mission) {
-            D.Err("Mission Ended");
+            // D.Err("Mission Ended");
             CopterMissions.Remove(mission.TargetId);
             RebuildMenu();
         }

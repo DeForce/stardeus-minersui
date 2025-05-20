@@ -1,0 +1,1 @@
+﻿New-Item -Path "$env:AppData\..\LocalLow\Kodo Linija\Stardeus\Mods\miners_ui" -ItemType Junction -Value ".\.."

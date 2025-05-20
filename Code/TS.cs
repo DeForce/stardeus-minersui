@@ -9,10 +9,7 @@ namespace ShowMiners.Constants {
         public static string Truncate(string value, int maxLength) {
             const string ellipsis = "...";
 
-            if (string.IsNullOrEmpty(value) || maxLength <= ellipsis.Length)
-                return value;
-
-            if (value.Length <= maxLength)
+            if (string.IsNullOrEmpty(value) || maxLength <= ellipsis.Length || value.Length <= maxLength)
                 return value;
 
             var cutPoint = maxLength - ellipsis.Length;
@@ -29,6 +26,5 @@ namespace ShowMiners.Constants {
         public static string ShowDrills = "showminers.ui.showDrills";
         public static string KnownDrills = "showminers.ui.knownDrills";
         public static string InSector = "showminers.ui.inSector";
-        public static string Difficulty = "showminers.ui.difficulty";
     }
 }
