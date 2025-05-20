@@ -9,6 +9,7 @@ using Game.Systems.Copters;
 using Game.Systems.Planets;
 using Game.UI;
 using HarmonyLib;
+using KL.Utils;
 using ShowMiners.UI;
 using UnityEngine;
 
@@ -70,6 +71,7 @@ namespace ShowMiners.Systems {
         }
 
         private void SpaceObjectAdded(SpaceObject parameter) {
+            // D.Err("Space object added - {0}", parameter);
             RebuildMenu();
         }
 
@@ -112,6 +114,8 @@ namespace ShowMiners.Systems {
         }
 
         public void RebuildMenu() {
+            if (!UIShowing.Starmap) return;
+            
             RebuildStarmapMenu(DetailBlockStarmapWidget.Current);
         }
     }

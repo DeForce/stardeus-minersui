@@ -125,11 +125,13 @@ namespace ShowMiners.UI {
             // header ??= UDB.Create(this, UDBT.DTextRB2Header, IconId.CDrill, TS.Translate(TS.UITitle));
             // res.Add(header);
 
+            // D.Warn("Checking player location");
             var playerLocation = S.Universe.Player.Parent;
 
             var inSystemResources = new List<(PlanetResource, MatType)>();
             var allDrillResources = 0;
 
+            // D.Warn("Trying to get all resources");
             for (int i = resourceMaxIdx - 1; i >= 0; i--) {
                 if (S.Sys.Planets.TryGetResource(i, out var resource)) {
                     var starObject = S.Universe.Find(resource.Id);
@@ -145,6 +147,7 @@ namespace ShowMiners.UI {
                 }
             }
 
+            // D.Warn("Drill count: {0}", allDrillResources);
             if (allDrillResources <= 0) {
                 // No Drills, not showing the UI
                 return;
@@ -160,6 +163,7 @@ namespace ShowMiners.UI {
             spacer ??= UDBCache.Label(TS.Translate(TS.InSector));
             res.Add(spacer);
 
+            // D.Warn("Adding all sector drills to UI");
             var sortedResources = inSystemResources.OrderBy(r => r.Item2.NameT);
 
             foreach (var (resource, material) in sortedResources) {
@@ -197,6 +201,7 @@ namespace ShowMiners.UI {
 
                 res.Add(resourceItem);
             }
+            // D.Warn("Done adding all sector drills to UI");
         }
 
         private string GetButtonText(bool isMined, int resourceId) {
