@@ -7,6 +7,7 @@ using Game.Constants;
 using Game.Data;
 using Game.Data.Planets;
 using Game.Data.Space;
+using Game.Systems;
 using Game.Systems.Copters;
 using Game.Systems.Planets;
 using Game.UI;
@@ -72,7 +73,8 @@ namespace ShowMiners.UI {
                 UDB uiItem = null;
                 uiItem = UDB.Create(this, UDBT.DProgressBtn, matType.IconId, resourceString)
                     .WithIconTint(matType.IconTint)
-                    .WithText2(T.Show).WithClickFunction(() => {
+                    .WithText2(T.Show)
+                    .WithClickFunction(() => {
                         try {
                             if (S == null)
                                 return;
@@ -102,6 +104,8 @@ namespace ShowMiners.UI {
                     .WithRange(0.0f, resource.UnretrievedMax);
                 uiItem.UpdateValue(resource.Unretrieved);
                 string tooltip = PlanetsSys.TooltipForResource(in resource, matType);
+                tooltip = ($"{tooltip}\n\n{T.Location}: {(rSO.ParentPath())}");
+                
                 uiItem.UpdateTooltip(tooltip);
 
                 res.Add(uiItem);
@@ -168,6 +172,7 @@ namespace ShowMiners.UI {
 
                 var resourceItem = UDB.Create(this, buttonType, material.IconId, resourceString)
                     .WithIconTint(material.IconTint)
+                    .WithIconClickFunction(() => UniverseSys.ShowStarmapLocal(starObject))
                     .WithClickFunction(() => {
                         if (isMined) {
                             RequestDrillRig(starObject, resource);

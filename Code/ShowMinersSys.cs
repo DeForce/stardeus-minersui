@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Game.Data;
 using Game.Data.Planets;
+using Game.Data.Space;
 using Game.Systems;
 using Game.Systems.Copters;
 using Game.Systems.Planets;
@@ -65,6 +66,11 @@ namespace ShowMiners.Systems {
             UI = new ShowMinersUI(this);
             S.Sig.CopterMissionEnded.AddListener(CopterMissionEnded);
             S.Sig.CopterMissionStarted.AddListener(CopterMissionStarted);
+            S.Sig.SpaceObjectAdded.AddListener(SpaceObjectAdded);
+        }
+
+        private void SpaceObjectAdded(SpaceObject parameter) {
+            RebuildMenu();
         }
 
         private void CopterMissionStarted(CopterMissionData mission) {

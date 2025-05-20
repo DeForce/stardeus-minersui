@@ -16,6 +16,7 @@ Copy-Item -Path "$BuildDir\ModInfo.json" -Destination $OutDir -ErrorAction Silen
 
 Copy-Item -Path "Translations" -Destination "$OutDir/Translations" -Recurse
 Copy-Item -Path "Libraries" -Destination "$OutDir/Libraries" -Recurse
+Copy-Item -Path "Graphics" -Destination "$OutDir/Graphics" -Recurse
 Copy-Item -Path "README.md" -Destination $OutDir
 
 $datePart = Get-Date -Format yyyyMMdd
