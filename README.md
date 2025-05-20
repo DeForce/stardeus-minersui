@@ -1,4 +1,5 @@
 # This is not a Drill!
+![ModCover.jpg](ModCover.jpg)
 
 Mod that appends Star Map UI that shows allows managing Automatic Drill Rigs.
 
